@@ -1,3 +1,5 @@
 import './style.css'
-const app:HTMLCanvasElement = document.querySelector('#canvas')
-const stage = app.getContext('2d')
+import Game from './game'
+
+const game = new Game()
+game.setBgStyle('#000')
