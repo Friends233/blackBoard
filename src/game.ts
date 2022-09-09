@@ -21,6 +21,7 @@ export default class BlackBorad {
     stage.fillRect(0, 0, el.width, el.height)
 
     this.init_event()
+    this.init_btns()
   }
 
   /**
@@ -40,11 +41,31 @@ export default class BlackBorad {
   }
 
   /**
+   * 初始化功能按钮
+   */
+  private init_btns() {
+    const btnWrapper = document.querySelector('.btn-wrapper')
+    // 清屏
+    const clearBtn = document.createElement('button')
+    clearBtn.innerText = '清屏'
+    clearBtn.addEventListener('click',this.clearAll.bind(this))
+    btnWrapper?.appendChild(clearBtn)
+  }
+
+  /**
+   * 清屏
+   */
+  private clearAll() {
+    this.stage.fillStyle = this.bgStyle
+    this.stage.fillRect(0, 0, this.el.width, this.el.height)
+  }
+
+  /**
    * 划线
    * @param event 事件对象
    */
   private drawEventCallback(event: MouseEvent) {
-    console.log('e', event)
+    // console.log('e', event)
     this.stage.lineTo(event.offsetX, event.offsetY)
     this.stage.strokeStyle = this.lineStyle
     this.stage.stroke()
@@ -55,10 +76,10 @@ export default class BlackBorad {
    * @param color 颜色
    * @returns 当前对象实例
    */
-  public setBgStyle(color){
+  public setBgStyle(color) {
     this.bgStyle = color
     this.stage.fillStyle = this.bgStyle
-    this.stage.fillRect(0,0,this.el.width,this.el.height)
+    this.stage.fillRect(0, 0, this.el.width, this.el.height)
     return this
   }
 }
