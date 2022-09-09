@@ -3,19 +3,30 @@ export default class BlackBorad {
   private el: HTMLCanvasElement = null
   /** 画板背景 */
   private stage: CanvasRenderingContext2D = null
+  /** 默认数据 */
+  private resetInfo = {
+    lineStyle: '#fff',
+    bgStyle: '#000',
+    lineWidth: 1,
+    // 橡皮擦默认宽度
+    eraserWidth: 10
+  }
   /** 笔触颜色 */
   private lineStyle = '#fff'
   /** 画板背景颜色 */
   private bgStyle = '#000'
+  /** 笔触宽度 */
+  private lineWidth = 1
 
   constructor() {
     this.init()
   }
 
   private init() {
-    window.οndragstart = "return false;"
     const el = this.el = document.querySelector('#canvas') as HTMLCanvasElement
     const stage = this.stage = el.getContext('2d')!
+
+    this.reset()
 
     stage.fillStyle = this.bgStyle
     stage.fillRect(0, 0, el.width, el.height)
@@ -46,10 +57,18 @@ export default class BlackBorad {
   private init_btns() {
     const btnWrapper = document.querySelector('.btn-wrapper')
     // 清屏
-    const clearBtn = document.createElement('button')
-    clearBtn.innerText = '清屏'
-    clearBtn.addEventListener('click',this.clearAll.bind(this))
-    btnWrapper?.appendChild(clearBtn)
+    const clearBtn = document.querySelector('.btn-clear')
+    clearBtn.addEventListener('click', this.clearAll.bind(this))
+
+    // 橡皮擦
+    const eraserBtn = document.querySelector('.btn-eraser')
+    eraserBtn?.addEventListener('click',this.eraser.bind(this))
+  }
+
+  reset() {
+    this.lineStyle = this.resetInfo.lineStyle
+    this.bgStyle = this.resetInfo.bgStyle
+    this.lineWidth = this.resetInfo.lineWidth
   }
 
   /**
@@ -61,6 +80,19 @@ export default class BlackBorad {
   }
 
   /**
+   * 橡皮擦
+   */
+  private eraser() {
+    if (this.lineStyle === this.bgStyle) {
+      this.lineStyle = this.resetInfo.lineStyle
+      this.lineWidth = this.resetInfo.lineWidth
+    } else {
+      this.lineStyle = this.bgStyle
+      this.lineWidth = this.resetInfo.eraserWidth
+    }
+  }
+
+  /**
    * 划线
    * @param event 事件对象
    */
@@ -68,6 +100,7 @@ export default class BlackBorad {
     // console.log('e', event)
     this.stage.lineTo(event.offsetX, event.offsetY)
     this.stage.strokeStyle = this.lineStyle
+    this.stage.lineWidth = this.lineWidth
     this.stage.stroke()
   }
 
