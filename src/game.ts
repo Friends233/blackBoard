@@ -48,6 +48,13 @@ export default class BlackBorad {
       this.setLineColor(lineColor.value)
     })
 
+    const bgColor:HTMLInputElement = document.querySelector('.bg-select')
+    bgColor.value = this.bgStyle
+    bgColor?.addEventListener('input',() => {
+      // console.log('背景颜色',bgColor.value)
+      this.setBgStyle(bgColor.value)
+    })
+
     this.el.addEventListener('mousedown', () => {
       this.stage.beginPath()
       this.el.addEventListener('mousemove', drawEventCallback)
@@ -126,13 +133,12 @@ export default class BlackBorad {
   /**
    * 设置背景颜色
    * @param color 颜色
-   * @returns 当前对象实例
    */
   private setBgStyle(color) {
+    this.resetInfo.lineStyle = color
     this.bgStyle = color
     this.stage.fillStyle = this.bgStyle
     this.stage.fillRect(0, 0, this.el.width, this.el.height)
-    return this
   }
 }
 
