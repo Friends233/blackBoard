@@ -82,11 +82,14 @@ export default class BlackBorad {
   /**
    * 橡皮擦
    */
-  private eraser() {
+  private eraser(e:HTMLButtonElement) {
+    const dom = e.target
     if (this.lineStyle === this.bgStyle) {
+      dom.className = dom.className.replace(' active-btn','')
       this.lineStyle = this.resetInfo.lineStyle
       this.lineWidth = this.resetInfo.lineWidth
     } else {
+      dom.className +=' active-btn'
       this.lineStyle = this.bgStyle
       this.lineWidth = this.resetInfo.eraserWidth
     }
