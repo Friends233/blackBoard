@@ -1,5 +1,9 @@
-* {margin: 0;padding: 0;}
-body,html {
+* {
+  margin: 0;
+  padding: 0;
+}
+body,
+html {
   position: fixed;
   background-color: cadetblue;
 }
@@ -8,8 +12,8 @@ body,html {
   top: 100px;
   left: 50%;
   transform: translateX(-50%);
-  overflow: hidden; 
-  user-select: none; 
+  overflow: hidden;
+  user-select: none;
 }
 .btn-wrapper {
   width: 600px;
@@ -21,12 +25,15 @@ body,html {
   transform: translateX(-50%);
   display: flex;
   flex-wrap: wrap;
-}
-.btn-wrapper > button {
-  width: 50px;
-  height: 30px;
-  margin-right: 10px;
-}
-.active-btn {
-  color:crimson ;
+  > button {
+    width: 50px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  >div {
+    color: azure;
+  }
+  .active-btn {
+    color: crimson;
+  }
 }

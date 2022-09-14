@@ -5,16 +5,16 @@ export default class BlackBorad {
   private stage: CanvasRenderingContext2D = null
   /** 默认数据 */
   private resetInfo = {
-    lineStyle: '#fff',
-    bgStyle: '#000',
+    lineStyle: '#ffffff',
+    bgStyle: '#000000',
     lineWidth: 1,
     // 橡皮擦默认宽度
     eraserWidth: 10
   }
   /** 笔触颜色 */
-  private lineStyle = '#fff'
+  private lineStyle = '#ffffff'
   /** 画板背景颜色 */
-  private bgStyle = '#000'
+  private bgStyle = '#000000'
   /** 笔触宽度 */
   private lineWidth = 1
 
@@ -40,6 +40,13 @@ export default class BlackBorad {
    */
   private init_event() {
     const drawEventCallback = this.drawEventCallback.bind(this)
+
+    const lineColor:HTMLInputElement = document.querySelector('.color-select')
+    lineColor.value = this.lineStyle
+    lineColor?.addEventListener('input',() => {
+      // console.log('笔触颜色',lineColor.value)
+      this.setLineColor(lineColor.value)
+    })
 
     this.el.addEventListener('mousedown', () => {
       this.stage.beginPath()
@@ -108,11 +115,20 @@ export default class BlackBorad {
   }
 
   /**
+   * 设置笔触颜色
+   * @param color 颜色
+   */
+  private setLineColor(color) {
+    this.lineStyle = color
+    this.resetInfo.lineStyle = color
+  }
+
+  /**
    * 设置背景颜色
    * @param color 颜色
    * @returns 当前对象实例
    */
-  public setBgStyle(color) {
+  private setBgStyle(color) {
     this.bgStyle = color
     this.stage.fillStyle = this.bgStyle
     this.stage.fillRect(0, 0, this.el.width, this.el.height)

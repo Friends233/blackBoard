@@ -1,4 +1,4 @@
-import './style.css'
+import './style.less'
 import Game from './game'
 
 const game = new Game()
