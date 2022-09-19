@@ -23,7 +23,7 @@ export default class BlackBorad {
 
   private init() {
     this.reset()
-    
+
     this.stage.fillStyle = this.bgStyle
     this.stage.fillRect(0, 0, this.el.width, this.el.height)
 
@@ -110,7 +110,6 @@ export default class BlackBorad {
    */
   private drawEventCallback(event: MouseEvent) {
 
-    // console.log('e', event)
     this.stage.lineTo(event.offsetX, event.offsetY)
     this.stage.strokeStyle = this.lineStyle
     this.stage.lineWidth = this.lineWidth
@@ -131,8 +130,13 @@ export default class BlackBorad {
    * @param color 颜色
    */
   private setBgStyle(color: string) {
-    this.resetInfo.lineStyle = color
+    // 修改背景颜色时，同时修改橡皮擦
+    if (this.lineStyle === this.bgStyle) {
+      this.lineStyle = color
+    }
+
     this.bgStyle = color
+
     this.stage.fillStyle = this.bgStyle
     this.stage.fillRect(0, 0, this.el.width, this.el.height)
   }
