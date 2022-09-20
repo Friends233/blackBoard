@@ -37,20 +37,6 @@ export default class BlackBorad {
   private init_event() {
     const drawEventCallback = this.drawEventCallback.bind(this)
 
-    const lineColor = document.querySelector<HTMLInputElement>('.color-select')!
-    lineColor.value = this.lineStyle
-    lineColor?.addEventListener('input', () => {
-      // console.log('笔触颜色',lineColor.value)
-      this.setLineColor(lineColor.value)
-    })
-
-    const bgColor = document.querySelector<HTMLInputElement>('.bg-select')!
-    bgColor.value = this.bgStyle
-    bgColor?.addEventListener('input', () => {
-      // console.log('背景颜色',bgColor.value)
-      this.setBgStyle(bgColor.value)
-    })
-
     this.el.addEventListener('mousedown', () => {
       this.stage.beginPath()
       this.el.addEventListener('mousemove', drawEventCallback)
@@ -72,6 +58,26 @@ export default class BlackBorad {
     // 橡皮擦
     const eraserBtn = document.querySelector('.btn-eraser') as HTMLButtonElement
     eraserBtn?.addEventListener('click', this.eraser.bind(this))
+
+    // 修改笔触颜色
+    const lineColor = document.querySelector<HTMLInputElement>('.color-select')!
+    lineColor.value = this.lineStyle
+    lineColor?.addEventListener('input', () => {
+      // console.log('笔触颜色',lineColor.value)
+      this.setLineColor(lineColor.value)
+    })
+
+    // 修改背景颜色
+    const bgColor = document.querySelector<HTMLInputElement>('.bg-select')!
+    bgColor.value = this.bgStyle
+    bgColor?.addEventListener('input', () => {
+      // console.log('背景颜色',bgColor.value)
+      this.setBgStyle(bgColor.value)
+    })
+
+    // 下载保存
+    const downloadBtn = document.querySelector<HTMLButtonElement>('.btn-download')
+    downloadBtn?.addEventListener('click',this.download.bind(this))
   }
 
   reset() {
@@ -139,6 +145,19 @@ export default class BlackBorad {
 
     this.stage.fillStyle = this.bgStyle
     this.stage.fillRect(0, 0, this.el.width, this.el.height)
+  }
+
+  /**
+   * 下载
+   */
+  private download() {
+    const dataUrl = this.el.toDataURL('image/jpeg')
+    const dom = document.createElement('a')
+    dom.href = dataUrl
+    dom.download = "画板"
+    document.body.appendChild(dom)
+    dom.click()
+    document.body.removeChild(dom)
   }
 }
 
